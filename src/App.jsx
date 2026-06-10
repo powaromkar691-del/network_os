@@ -1,3 +1,6 @@
+import NetworkView from "./views/NetworkView";
+import ReportsView from "./views/ReportsView";
+import SettingsView from "./views/SettingsView";
 import { useMemo, useState } from "react";
 
 import {
@@ -49,8 +52,7 @@ function cx(...classes) {
 }
 
 export default function App() {
-  const [active, setActive] = useState("upload");
-
+  const [active, setActive] = useState("dashboard");
   const [connections, setConnections] = useState([]);
   const [messages, setMessages] = useState([]);
   const [files, setFiles] = useState([]);
@@ -294,17 +296,13 @@ export default function App() {
   }
 
   const nav = [
-    ["upload", "Upload", "⬆️"],
-    ["dashboard", "Command Center", "📊"],
-    ["connections", "Connections", "🕸️"],
-    ["messages", "Messages", "💬"],
-    ["pipeline", "Pipeline", "🧩"],
-    ["mentor", "Mentor Radar", "🎯"],
-    ["company", "Company Map", "🏢"],
-    ["opportunity", "Opportunity", "🚀"],
-    ["profile", "Profile Audit", "👤"],
-    ["copilot", "Copilot", "🤖"],
-    ["privacy", "Privacy", "🛡️"]
+    ["dashboard", "Dashboard", "📊"],
+    ["network", "Network", "🕸️"],
+    ["opportunity", "Opportunities", "🚀"],
+    ["mentor", "Mentors", "🎯"],
+    ["company", "Companies", "🏢"],
+    ["reports", "Reports", "📄"],
+    ["settings", "Settings", "⚙️"]
   ];
 
   return (
@@ -420,47 +418,11 @@ export default function App() {
             />
           )}
 
-          {active === "connections" && (
-            <ConnectionsView
-              connections={connections}
-              filteredConnections={filteredConnections}
-              domains={domains}
-              seniorities={seniorities}
-              query={query}
-              setQuery={setQuery}
-              domainFilter={domainFilter}
-              setDomainFilter={setDomainFilter}
-              seniorityFilter={seniorityFilter}
-              setSeniorityFilter={setSeniorityFilter}
-              showEmails={showEmails}
-              setShowEmails={setShowEmails}
-              setSelectedContactId={setSelectedContactId}
-              selectedContact={selectedContact}
-            />
-          )}
+         
 
-          {active === "messages" && (
-            <MessagesView
-              messages={messages}
-              conversations={conversations}
-              activeConversation={activeConversation}
-              setSelectedConversation={setSelectedConversationId}
-              ownName={ownName}
-              setOwnName={setOwnName}
-              reclassifyMessagesWithName={reclassifyMessagesWithName}
-              showMessages={showMessages}
-              setShowMessages={setShowMessages}
-              metrics={metrics}
-            />
-          )}
+          
 
-          {active === "pipeline" && (
-            <PipelineView
-              connections={connections}
-              pipelineColumns={pipelineColumns}
-            />
-          )}
-
+       
           {active === "mentor" && (
             <MentorView mentorList={mentorList} />
           )}
@@ -493,6 +455,60 @@ export default function App() {
 
           {active === "privacy" && (
             <PrivacyView />
+          )}
+
+          {active === "network" && (
+            <NetworkView
+              ConnectionsComponent={
+                <ConnectionsView
+                  connections={connections}
+                  filteredConnections={filteredConnections}
+                  domains={domains}
+                  seniorities={seniorities}
+                  query={query}
+                  setQuery={setQuery}
+                  domainFilter={domainFilter}
+                  setDomainFilter={setDomainFilter}
+                  seniorityFilter={seniorityFilter}
+                  setSeniorityFilter={setSeniorityFilter}
+                  showEmails={showEmails}
+                  setShowEmails={setShowEmails}
+                  setSelectedContactId={setSelectedContactId}
+                  selectedContact={selectedContact}
+                />
+              }
+              MessagesComponent={
+                <MessagesView
+                  messages={messages}
+                  conversations={conversations}
+                  activeConversation={activeConversation}
+                  setSelectedConversation={setSelectedConversationId}
+                  ownName={ownName}
+                  setOwnName={setOwnName}
+                  reclassifyMessagesWithName={
+                    reclassifyMessagesWithName
+                  }
+                  showMessages={showMessages}
+                  setShowMessages={setShowMessages}
+                  metrics={metrics}
+                />
+              }
+              PipelineComponent={
+                <PipelineView
+                  connections={connections}
+                  pipelineColumns={pipelineColumns}
+                />
+              }
+            />
+          )}
+  
+
+          {active === "reports" && (
+            <ReportsView />
+          )}
+
+          {active === "settings" && (
+            <SettingsView />
           )}
         </main>
       </div>
