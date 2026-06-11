@@ -59,7 +59,7 @@ export default function App() {
 
   const [sections, setSections] = useState({});
   const [profile, setProfile] = useState({});
-
+  const [selectedDomain, setSelectedDomain] = useState(null);
   const [zipName, setZipName] = useState("");
   const [ownName, setOwnName] = useState("Omkar Powar");
 
