@@ -2,9 +2,7 @@ export function calculateMentorScore(contact) {
   let score = 0;
   const reasons = [];
 
-  const role = (
-    contact.position || ""
-  ).toLowerCase();
+  const role = (contact.position || "").toLowerCase();
 
   if (
     role.includes("director") ||
@@ -23,9 +21,7 @@ export function calculateMentorScore(contact) {
     reasons.push("Leadership role");
   }
 
-  if (
-    role.includes("founder")
-  ) {
+  if (role.includes("founder")) {
     score += 20;
     reasons.push("Founder experience");
   }
@@ -46,16 +42,12 @@ export function calculateMentorScore(contact) {
     reasons.push("Known company");
   }
 
-  if (
-    (contact.priorityScore || 0) > 80
-  ) {
+  if ((contact.priorityScore || 0) > 80) {
     score += 15;
     reasons.push("High-value connection");
   }
 
-  if (
-    role.includes("recruiter")
-  ) {
+  if (role.includes("recruiter")) {
     score -= 10;
   }
 
