@@ -435,14 +435,6 @@ export default function App() {
             <OpportunityView connections={connections} />
           )}
 
-          {active === "profile" && (
-            <ProfileView
-              profile={profile}
-              profileAudit={profileAudit}
-              sections={sections}
-              ownName={ownName}
-            />
-          )}
 
           {active === "copilot" && (
             <CopilotView
@@ -453,9 +445,7 @@ export default function App() {
             />
           )}
 
-          {active === "privacy" && (
-            <PrivacyView />
-          )}
+         
 
           {active === "network" && (
             <NetworkView
@@ -508,7 +498,17 @@ export default function App() {
           )}
 
           {active === "settings" && (
-            <SettingsView />
+            <SettingsView
+              ProfileComponent={
+                <ProfileView
+                  profile={profile}
+                  profileAudit={profileAudit}
+                  sections={sections}
+                  ownName={ownName}
+                />
+              }
+              PrivacyComponent={<PrivacyView />}
+            />
           )}
         </main>
       </div>
