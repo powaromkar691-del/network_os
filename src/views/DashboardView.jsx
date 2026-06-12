@@ -3,16 +3,24 @@ import EmptyState from "../components/EmptyState";
 import StatCard from "../components/StatCard";
 import SimpleBarChart from "../components/SimpleBarChart";
 import SectionCounts from "../components/SectionCounts";
-
+import OpportunitySnapshot from "../components/OpportunitySnapshot";
 export default function DashboardView({
   connections,
   metrics,
   sections,
   profileAudit,
   domainData,
-  companyData
+  companyData,
+  mentorList
 }) {
   if (!connections.length) {
+    const topOpportunity =
+     mentorList?.length
+      ? mentorList[0]
+      : connections[0];
+
+
+
     return (
       <section>
         <SectionTitle
@@ -20,6 +28,24 @@ export default function DashboardView({
           title="Network Intelligence Dashboard"
           subtitle="Overview from the uploaded LinkedIn ZIP."
         />
+        <div className="mb-6 grid gap-6 xl:grid-cols-[1.5fr_1fr]">
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-r from-violet-500/20 to-cyan-500/10 p-6">
+          <p className="text-xs uppercase tracking-wider text-violet-300">
+             Network Health
+          </p>
+          <h2 className="mt-2 text-4xl font-bold text-white">
+            {metrics.high}
+          </h2>
+          <p className="mt-2 text-slate-300">
+            High-value connections identified in your network.
+          </p>
+
+          </div>
+          <OpportunitySnapshot
+            contact={topOpportunity}
+          />
+        </div>
+
 
         <EmptyState
           title="No data loaded yet"
