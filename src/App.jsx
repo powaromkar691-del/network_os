@@ -46,7 +46,7 @@ import CompanyView from "./views/CompanyView";
 import MentorView from "./views/MentorView";
 import OpportunityView from "./views/OpportunityView";
 import CopilotView from "./views/CopilotView";
-
+import DomainExplorer from "./components/DomainExplorer";
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -510,6 +510,11 @@ export default function App() {
               PrivacyComponent={<PrivacyView />}
             />
           )}
+          <DomainExplorer
+            domain={selectedDomain}
+            connections={connections}
+            onClose={() => setSelectedDomain(null)}
+          />
         </main>
       </div>
     </div>
