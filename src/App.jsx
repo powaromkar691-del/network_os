@@ -415,6 +415,7 @@ export default function App() {
               profileAudit={profileAudit}
               domainData={domainData}
               companyData={companyData}
+              mentorList={mentorList}
             />
           )}
 

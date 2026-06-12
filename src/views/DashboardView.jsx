@@ -3,7 +3,9 @@ import EmptyState from "../components/EmptyState";
 import StatCard from "../components/StatCard";
 import SimpleBarChart from "../components/SimpleBarChart";
 import SectionCounts from "../components/SectionCounts";
+import NetworkInsights from "../components/NetworkInsights";
 import OpportunitySnapshot from "../components/OpportunitySnapshot";
+
 export default function DashboardView({
   connections,
   metrics,
@@ -13,14 +15,12 @@ export default function DashboardView({
   companyData,
   mentorList
 }) {
-  if (!connections.length) {
-    const topOpportunity =
-     mentorList?.length
+  const topOpportunity =
+    mentorList?.length > 0
       ? mentorList[0]
-      : connections[0];
+      : connections?.[0];
 
-
-
+  if (!connections.length) {
     return (
       <section>
         <SectionTitle
@@ -28,24 +28,6 @@ export default function DashboardView({
           title="Network Intelligence Dashboard"
           subtitle="Overview from the uploaded LinkedIn ZIP."
         />
-        <div className="mb-6 grid gap-6 xl:grid-cols-[1.5fr_1fr]">
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-r from-violet-500/20 to-cyan-500/10 p-6">
-          <p className="text-xs uppercase tracking-wider text-violet-300">
-             Network Health
-          </p>
-          <h2 className="mt-2 text-4xl font-bold text-white">
-            {metrics.high}
-          </h2>
-          <p className="mt-2 text-slate-300">
-            High-value connections identified in your network.
-          </p>
-
-          </div>
-          <OpportunitySnapshot
-            contact={topOpportunity}
-          />
-        </div>
-
 
         <EmptyState
           title="No data loaded yet"
@@ -63,6 +45,36 @@ export default function DashboardView({
         title="Network Intelligence Dashboard"
         subtitle="Overview from the uploaded LinkedIn ZIP."
       />
+
+      {/* Hero Section */}
+
+      <div className="mb-6 grid gap-6 xl:grid-cols-3">
+        <div className="rounded-3xl border border-white/10 bg-gradient-to-r from-violet-500/20 to-cyan-500/10 p-6">
+          <p className="text-xs uppercase tracking-wider text-violet-300">
+            Network Health
+          </p>
+
+          <h2 className="mt-2 text-4xl font-bold text-white">
+            {metrics.high}
+          </h2>
+
+          <p className="mt-2 text-slate-300">
+            High-value connections identified in your network.
+          </p>
+        </div>
+
+        <OpportunitySnapshot
+          contact={topOpportunity}
+        />
+
+        <NetworkInsights
+          metrics={metrics}
+          domainData={domainData}
+          companyData={companyData}
+        />
+      </div>
+
+      {/* Core KPIs */}
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <StatCard
@@ -89,31 +101,9 @@ export default function DashboardView({
           value={metrics.replyRate + "%"}
           icon="💬"
         />
-
-        <StatCard
-          title="Recruiters"
-          value={metrics.recruiters}
-          icon="💼"
-        />
-
-        <StatCard
-          title="Mentors"
-          value={metrics.mentors}
-          icon="🎯"
-        />
-
-        <StatCard
-          title="Skills"
-          value={(sections.skills || []).length}
-          icon="🧠"
-        />
-
-        <StatCard
-          title="Profile Score"
-          value={profileAudit.score}
-          icon="👤"
-        />
       </div>
+
+      {/* Analytics */}
 
       <div className="mt-6 grid gap-6 xl:grid-cols-3">
         <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-5">
