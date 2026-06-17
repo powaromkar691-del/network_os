@@ -30,7 +30,7 @@ import {
   getPipelineColumns,
   getMentorList,
   getNetworkMetrics,
-  copilotAnswer
+ 
 } from "./lib/analytics";
 
 import { buildProfileAudit } from "./lib/scoring";
@@ -43,9 +43,9 @@ import PipelineView from "./views/PipelineView";
 import PrivacyView from "./views/PrivacyView";
 import ProfileView from "./views/ProfileView";
 import CompanyView from "./views/CompanyView";
-import MentorView from "./views/MentorView";
+
 import OpportunityView from "./views/OpportunityView";
-import CopilotView from "./views/CopilotView";
+
 
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -76,9 +76,8 @@ export default function App() {
   const [selectedConversationId, setSelectedConversationId] = useState(null);
   const [selectedContactId, setSelectedContactId] = useState(null);
 
-  const [copilotQuery, setCopilotQuery] = useState("");
-  const [copilotHistory, setCopilotHistory] = useState([]);
-
+  
+  
   function loadSampleData() {
     const normalizedConnections = normalizeConnections(SAMPLE_CONNECTIONS);
     const normalizedMessages = normalizeMessages(SAMPLE_MESSAGES, ownName);
@@ -276,32 +275,15 @@ export default function App() {
     messages
   ]);
 
-  function askCopilot(text) {
-    const q = text || copilotQuery;
-
-    const answer = copilotAnswer(
-      q,
-      connections,
-      profileAudit
-    );
-
-    setCopilotHistory((previous) => {
-      return [
-        { q, answer },
-        ...previous
-      ].slice(0, 10);
-    });
-
-    setCopilotQuery("");
-  }
+  
 
   const nav = [
     ["dashboard", "Dashboard", "📊"],
     ["network", "Network", "🕸️"],
     ["opportunity", "Opportunities", "🚀"],
-    ["mentor", "Mentors", "🎯"],
+    
     ["company", "Companies", "🏢"],
-    ["reports", "Reports", "📄"],
+  
     ["settings", "Settings", "⚙️"]
   ];
 
@@ -423,27 +405,18 @@ export default function App() {
           
 
        
-          {active === "mentor" && (
-            <MentorView mentorList={mentorList} />
-          )}
+        
 
           {active === "company" && (
             <CompanyView companyMap={companyMap} />
           )}
 
           {active === "opportunity" && (
-            <OpportunityView connections={connections} />
+            <OpportunityView connections={connections}
+            mentorList={mentorList} />
           )}
 
 
-          {active === "copilot" && (
-            <CopilotView
-              copilotQuery={copilotQuery}
-              setCopilotQuery={setCopilotQuery}
-              askCopilot={askCopilot}
-              copilotHistory={copilotHistory}
-            />
-          )}
 
          
 
