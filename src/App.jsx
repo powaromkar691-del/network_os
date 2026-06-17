@@ -299,7 +299,7 @@ export default function App() {
     ["dashboard", "Dashboard", "📊"],
     ["network", "Network", "🕸️"],
     ["opportunity", "Opportunities", "🚀"],
-    ["mentor", "Mentors", "🎯"],
+   
     ["company", "Companies", "🏢"],
     ["reports", "Reports", "📄"],
     ["settings", "Settings", "⚙️"]
@@ -424,16 +424,15 @@ export default function App() {
           
 
        
-          {active === "mentor" && (
-            <MentorView mentorList={mentorList} />
-          )}
-
+      
           {active === "company" && (
             <CompanyView companyMap={companyMap} />
           )}
 
           {active === "opportunity" && (
-            <OpportunityView connections={connections} />
+            <OpportunityView connections={connections} 
+             mentorList={mentorList}
+             />
           )}
 
 

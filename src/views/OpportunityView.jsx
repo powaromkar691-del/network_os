@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 
+import ContactCard from "../components/ContactCard";
 import SectionTitle from "../components/SectionTitle";
 import EmptyState from "../components/EmptyState";
 import OpportunityCard from "../components/OpportunityCard";
@@ -16,7 +17,10 @@ const GOALS = [
   "Founder"
 ];
 
-export default function OpportunityView({ connections }) {
+export default function OpportunityView({
+  connections,
+  mentorList
+}) {
   const [goal, setGoal] = useState("All");
 
   const opportunities = useMemo(() => {
@@ -118,6 +122,8 @@ export default function OpportunityView({ connections }) {
         subtitle="Discover the highest-value people, mentors, and career opportunities."
       />
 
+      {/* Career Goal Mode */}
+
       <div className="mb-6 rounded-3xl border border-white/10 bg-white/[0.05] p-5">
         <label className="mb-2 block text-sm text-slate-400">
           Career Goal Mode
@@ -140,6 +146,8 @@ export default function OpportunityView({ connections }) {
         </p>
       </div>
 
+      {/* Opportunity Summary */}
+
       <div className="mb-6 rounded-3xl border border-violet-500/20 bg-violet-500/10 p-5">
         <h3 className="font-semibold text-white">
           Top Opportunities Found
@@ -149,6 +157,8 @@ export default function OpportunityView({ connections }) {
           {opportunities.length} high-value contacts ranked by opportunity score.
         </p>
       </div>
+
+      {/* Top Opportunities */}
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {opportunities.map(
@@ -160,6 +170,29 @@ export default function OpportunityView({ connections }) {
             />
           )
         )}
+      </div>
+
+      {/* Mentor Opportunities */}
+
+      <div className="mt-10">
+        <div className="mb-5">
+          <h3 className="text-2xl font-semibold text-white">
+            Mentor Opportunities
+          </h3>
+
+          <p className="mt-2 text-sm text-slate-400">
+            High-value professionals worth learning from and building long-term relationships with.
+          </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {mentorList?.slice(0, 6).map((contact) => (
+            <ContactCard
+              key={contact.id}
+              contact={contact}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
