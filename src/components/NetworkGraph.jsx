@@ -21,38 +21,18 @@ export default function NetworkGraph({
     )
   );
 
-  const recommendation =
-    networkHealth > 80
-      ? "Strong network. Focus on deeper relationships."
-      : networkHealth > 60
-      ? "Good network. Increase mentor interactions."
-      : "Grow your network and engage with more professionals.";
-
   return (
     <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-6">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h3 className="text-xl font-semibold text-white">
-            Network Health
-          </h3>
-
-          <p className="text-sm text-slate-400">
-            Intelligence summary of your professional network.
-          </p>
-        </div>
-
-        <div className="text-right">
-          <p className="text-4xl font-bold text-white">
-            {networkHealth}
-          </p>
-
-          <p className="text-xs text-slate-500">
-            /100
-          </p>
-        </div>
-      </div>
+      <h3 className="mb-4 text-xl font-semibold text-white">
+        Network Health
+      </h3>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <Metric
+          label="Health Score"
+          value={networkHealth}
+        />
+
         <Metric
           label="Top Domain"
           value={topDomain}
@@ -67,21 +47,6 @@ export default function NetworkGraph({
           label="Mentors"
           value={metrics.mentors}
         />
-
-        <Metric
-          label="Recruiters"
-          value={metrics.recruiters}
-        />
-      </div>
-
-      <div className="mt-6 rounded-2xl bg-black/20 p-4">
-        <p className="text-xs uppercase tracking-wider text-violet-300">
-          Recommendation
-        </p>
-
-        <p className="mt-2 text-sm text-slate-300">
-          {recommendation}
-        </p>
       </div>
     </div>
   );
@@ -90,11 +55,11 @@ export default function NetworkGraph({
 function Metric({ label, value }) {
   return (
     <div className="rounded-2xl bg-black/20 p-4">
-      <p className="text-xs uppercase tracking-wider text-slate-400">
+      <p className="text-xs text-slate-400">
         {label}
       </p>
 
-      <p className="mt-2 text-lg font-semibold text-white">
+      <p className="mt-2 text-xl font-bold text-white">
         {value}
       </p>
     </div>

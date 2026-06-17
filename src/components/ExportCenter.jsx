@@ -8,8 +8,8 @@ export default function ExportCenter({
   companyData
 }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-5">
-      <h3 className="mb-4 font-semibold text-white">
+    <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-6">
+      <h3 className="mb-4 text-xl font-semibold text-white">
         Export Center
       </h3>
 

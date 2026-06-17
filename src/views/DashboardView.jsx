@@ -3,6 +3,8 @@ import EmptyState from "../components/EmptyState";
 import StatCard from "../components/StatCard";
 import SimpleBarChart from "../components/SimpleBarChart";
 import SectionCounts from "../components/SectionCounts";
+import NetworkGraph from "../components/NetworkGraph";
+import ExportCenter from "../components/ExportCenter";
 
 export default function DashboardView({
   connections,
@@ -39,54 +41,14 @@ export default function DashboardView({
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          title="Total Connections"
-          value={connections.length}
-          icon="🕸️"
-        />
-
-        <StatCard
-          title="Companies"
-          value={metrics.companies}
-          icon="🏢"
-        />
-
-        <StatCard
-          title="High Priority"
-          value={metrics.high}
-          icon="✨"
-          hint="Score 75+"
-        />
-
-        <StatCard
-          title="Reply Rate"
-          value={metrics.replyRate + "%"}
-          icon="💬"
-        />
-
-        <StatCard
-          title="Recruiters"
-          value={metrics.recruiters}
-          icon="💼"
-        />
-
-        <StatCard
-          title="Mentors"
-          value={metrics.mentors}
-          icon="🎯"
-        />
-
-        <StatCard
-          title="Skills"
-          value={(sections.skills || []).length}
-          icon="🧠"
-        />
-
-        <StatCard
-          title="Profile Score"
-          value={profileAudit.score}
-          icon="👤"
-        />
+        <StatCard title="Total Connections" value={connections.length} icon="🕸️" />
+        <StatCard title="Companies" value={metrics.companies} icon="🏢" />
+        <StatCard title="High Priority" value={metrics.high} icon="✨" hint="Score 75+" />
+        <StatCard title="Reply Rate" value={metrics.replyRate + "%"} icon="💬" />
+        <StatCard title="Recruiters" value={metrics.recruiters} icon="💼" />
+        <StatCard title="Mentors" value={metrics.mentors} icon="🎯" />
+        <StatCard title="Skills" value={(sections.skills || []).length} icon="🧠" />
+        <StatCard title="Profile Score" value={profileAudit.score} icon="👤" />
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-3">
@@ -107,6 +69,23 @@ export default function DashboardView({
         </div>
 
         <SectionCounts sections={sections} />
+      </div>
+
+      <div className="mt-6">
+        <NetworkGraph
+          metrics={metrics}
+          domainData={domainData}
+          companyData={companyData}
+        />
+      </div>
+
+      <div className="mt-6">
+        <ExportCenter
+          connections={connections}
+          metrics={metrics}
+          domainData={domainData}
+          companyData={companyData}
+        />
       </div>
     </section>
   );
