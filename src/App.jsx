@@ -1,5 +1,5 @@
 import NetworkView from "./views/NetworkView";
-import ReportsView from "./views/ReportsView";
+
 import SettingsView from "./views/SettingsView";
 import { useMemo, useState } from "react";
 
@@ -301,7 +301,7 @@ export default function App() {
     ["opportunity", "Opportunities", "🚀"],
    
     ["company", "Companies", "🏢"],
-    ["reports", "Reports", "📄"],
+    
     ["settings", "Settings", "⚙️"]
   ];
 
@@ -493,9 +493,7 @@ export default function App() {
           )}
   
 
-          {active === "reports" && (
-            <ReportsView />
-          )}
+          
 
           {active === "settings" && (
             <SettingsView

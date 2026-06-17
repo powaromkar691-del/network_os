@@ -1,3 +1,0 @@
-export default function ReportsView() {
-  return <div>Reports View</div>;
-}
