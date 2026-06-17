@@ -15,7 +15,9 @@ import {
   readLinkedInZip,
   findExportText
 } from "./lib/zip";
-
+import {
+  getDashboardInsights
+} from "./services/intelligence/dashboardInsights";
 import {
   parseLinkedInSections,
   normalizeConnections,
@@ -275,7 +277,16 @@ export default function App() {
     messages
   ]);
 
-  
+  const dashboardInsights =
+    useMemo(() => {
+      return getDashboardInsights(
+        connections,
+        conversations
+    );
+  }, [
+    connections,
+    conversations
+  ]);
 
   const nav = [
     ["dashboard", "Dashboard", "📊"],
@@ -397,6 +408,9 @@ export default function App() {
               profileAudit={profileAudit}
               domainData={domainData}
               companyData={companyData}
+              dashboardInsights={
+                dashboardInsights
+             }
             />
           )}
 
