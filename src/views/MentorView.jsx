@@ -7,41 +7,54 @@ import {
   buildPersonScore
 } from "../services/intelligence/personScore";
 
+import {
+  calculateRelationshipHealth
+} from "../services/intelligence/relationshipHealth";
+
 export default function MentorView({
-  mentorList
+  mentorList,
+  conversations = []
 }) {
-  if (!mentorList.length) {
+  if (!mentorList?.length) {
     return (
       <section>
         <SectionTitle
           eyebrow="Intelligence"
           title="Mentor Intelligence"
-          subtitle="Identify the strongest mentors in your network."
+          subtitle="Discover the highest-value mentors hidden in your network."
         />
 
         <EmptyState
           title="No mentor candidates yet"
-          subtitle="Upload LinkedIn ZIP or load the sample demo."
+          subtitle="Upload your LinkedIn ZIP or load the sample demo."
           icon="🎯"
         />
       </section>
     );
   }
 
-  const rankedMentors =
-    [...mentorList]
-      .map((mentor) => ({
+  const rankedMentors = [...mentorList]
+    .map((mentor) => {
+      const intelligence =
+        buildPersonScore(mentor);
+
+      const relationship =
+        calculateRelationshipHealth(
+          mentor,
+          conversations
+        );
+
+      return {
         contact: mentor,
-        intelligence:
-          buildPersonScore(
-            mentor
-          )
-      }))
-      .sort(
-        (a, b) =>
-          b.intelligence.mentor -
-          a.intelligence.mentor
-      );
+        intelligence,
+        relationship
+      };
+    })
+    .sort(
+      (a, b) =>
+        b.intelligence.mentor -
+        a.intelligence.mentor
+    );
 
   return (
     <section>
@@ -57,7 +70,8 @@ export default function MentorView({
           .map(
             ({
               contact,
-              intelligence
+              intelligence,
+              relationship
             }) => (
               <div
                 key={contact.id}
@@ -65,6 +79,9 @@ export default function MentorView({
               >
                 <ContactCard
                   contact={contact}
+                  relationship={
+                    relationship
+                  }
                 />
 
                 <div className="mt-4 grid grid-cols-2 gap-2">
@@ -102,14 +119,42 @@ export default function MentorView({
                     Recommended Approach
                   </p>
 
-                  <p className="mt-2 text-sm text-slate-300">
+                  <p className="mt-2 text-sm leading-6 text-slate-300">
                     Ask a focused question
                     about their career path,
-                    decision making, or
-                    technical growth. Avoid
-                    requesting referrals
-                    immediately.
+                    decision making, technical
+                    growth, or experience in
+                    their current domain.
                   </p>
+
+                  {relationship.status ===
+                  "Dormant" ? (
+                    <p className="mt-2 text-xs text-slate-400">
+                      This is a relatively
+                      inactive relationship,
+                      so start with context
+                      rather than asking for
+                      a referral.
+                    </p>
+                  ) : null}
+
+                  {relationship.status ===
+                  "Warm" ? (
+                    <p className="mt-2 text-xs text-amber-300">
+                      Existing interaction
+                      makes a focused
+                      conversation appropriate.
+                    </p>
+                  ) : null}
+
+                  {relationship.status ===
+                  "Healthy" ? (
+                    <p className="mt-2 text-xs text-emerald-300">
+                      Strong existing
+                      relationship. A direct
+                      conversation is reasonable.
+                    </p>
+                  ) : null}
                 </div>
 
                 <div className="mt-4">

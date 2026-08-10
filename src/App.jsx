@@ -2,6 +2,9 @@ import NetworkView from "./views/NetworkView";
 import ReportsView from "./views/ReportsView";
 import SettingsView from "./views/SettingsView";
 import { useMemo, useState } from "react";
+import {
+  buildNetworkIntelligence
+} from "./services/intelligence/personIntelligence";
 
 import {
   SAMPLE_CONNECTIONS,
@@ -276,6 +279,15 @@ export default function App() {
     conversations,
     messages
   ]);
+  const personIntelligence = useMemo(() => {
+    return buildNetworkIntelligence(
+      connections,
+      conversations
+  );
+}, [
+  connections,
+  conversations
+]);
 
   const dashboardInsights =
     useMemo(() => {
@@ -426,8 +438,13 @@ export default function App() {
           )}
 
           {active === "opportunity" && (
-            <OpportunityView connections={connections}
-            mentorList={mentorList} />
+            <OpportunityView
+              mentorList={mentorList}
+              connections={connections}
+              conversations={conversations}
+              personIntelligence={personIntelligence}
+             
+            />
           )}
 
 
@@ -452,6 +469,8 @@ export default function App() {
                   setShowEmails={setShowEmails}
                   setSelectedContactId={setSelectedContactId}
                   selectedContact={selectedContact}
+                  conversations={conversations}
+                  personIntelligence={personIntelligence}
                 />
               }
               MessagesComponent={
